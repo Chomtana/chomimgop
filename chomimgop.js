@@ -23,6 +23,12 @@ exports.default = function chomimgop() {
   return through.obj(function chomimgop(file, enc, cb) {
     var filepath = file.path;
 
+    //this is the result file don't optimize it again
+    if (filepath.match(/^(.*)-(.*)w\.(.*)$/)) {
+      cb();
+      return;
+    }
+
     function w(width) {
       var ext = fileext(filepath);
       var suffix = width ? "-" + width + "w" : "";

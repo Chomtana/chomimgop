@@ -29,7 +29,7 @@ exports.default = function chomimgop() {
 
       if (!width) width = 1920;
 
-      gm(namesuffix(filepath, suffix))
+      gm(filepath)
         .quality(60)
         .resize(width, null, ">")
         .write(changeext(namesuffix(filepath, suffix), "webp"), err => {
@@ -42,7 +42,7 @@ exports.default = function chomimgop() {
         });
 
       if (ext.toLowerCase() === "jpg" || ext.toLowerCase() === "jpeg") {
-        gm(namesuffix(filepath, suffix))
+        gm(filepath)
           .quality(60)
           .resize(width, null, ">")
           .strip()

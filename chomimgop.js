@@ -44,11 +44,11 @@ exports.default = function chomimgop() {
           .resize(width, null, ">")
           .write(changeext(namesuffix(filepath, suffix), "webp"), err => {
             if (err) {
-              console.log(namesuffix(filepath, suffix) + " Error!");
+              console.log(changeext(namesuffix(filepath, suffix), "webp") + " Error!");
               console.log(err);
               reject(err);
             } else {
-              console.log(namesuffix(filepath, suffix) + " Success!");
+              console.log(changeext(namesuffix(filepath, suffix), "webp") + " Success!");
 
               webp_ok = true;
               if (webp_ok && base_ok) resolve();

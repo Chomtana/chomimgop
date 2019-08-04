@@ -3,7 +3,7 @@ const { src, dest, parallel, serial, watch } = require('gulp');
 const gulpsrc = require('./gulpsrc.json')
 
 function chomimgop() {
-    return src(gulpsrc).pipe(chomimgoppipe);
+    return src(gulpsrc).pipe(chomimgoppipe).pipe(dest('.'));
 }
 
 function chomimgopwatch() {

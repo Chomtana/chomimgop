@@ -19,7 +19,7 @@ function fileext(file) {
   return file.substr(file.lastIndexOf(".") + 1);
 }
 
-export default through.obj(function chomimgop(file, enc, cb) {
+exports.default = through.obj(function chomimgop(file, enc, cb) {
   var filepath = file.path;
 
   function w(width) {

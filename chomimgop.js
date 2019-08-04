@@ -87,5 +87,7 @@ exports.default = function chomimgop() {
     w(360);
     w(240);
     w(196);
+
+    cb();
   });
 };

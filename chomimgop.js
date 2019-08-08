@@ -1,6 +1,10 @@
 const through = require("through2");
 const gm = require("gm").subClass({ imageMagick: true });
 const { exec } = require("child_process");
+const os = require("os")
+const fs = require("fs")
+
+var force_reop = false;
 
 function namesuffix(file, suffix) {
   return (
@@ -28,6 +32,11 @@ exports.default = function chomimgop() {
       cb();
       return;
     }
+	
+	//if this file is optimized don't optimize it again
+	if (fs.existsSync( changeext(filepath, "webp") )) {
+	  cb(); return;
+	}
 
     function w(width) {
       return new Promise((resolve, reject) => {

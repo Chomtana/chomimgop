@@ -13,4 +13,4 @@ function chomimgopwatch() {
 
 exports.op = chomimgop;
 exports.watch = chomimgopwatch;
-exports.default = chomimgopwatch;
+exports.default = chomimgop;

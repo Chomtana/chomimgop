@@ -1,1 +1,1 @@
-["**/*.jpg", "**/*.jpeg", "**/*.png"]
+["**/*.jpg", "**/*.jpeg", "**/*.png", "../frontend-next/**/*.jpg", "../frontend-next/**/*.jpeg", "../frontend-next/**/*.png"]

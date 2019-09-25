@@ -66,7 +66,7 @@ exports.default = function chomimgop() {
 
         if (ext.toLowerCase() === "jpg" || ext.toLowerCase() === "jpeg") {
           gm(filepath)
-            .quality(60)
+            .quality(85)
             .resize(width, null, ">")
             .strip()
             .samplingFactor(4, 2)

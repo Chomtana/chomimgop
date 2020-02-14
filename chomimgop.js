@@ -33,10 +33,10 @@ exports.default = function chomimgop() {
       return;
     }
 	
-	//if this file is optimized don't optimize it again
-	if (fs.existsSync( changeext(filepath, "webp") )) {
-	  cb(); return;
-	}
+		//if this file is optimized don't optimize it again
+		if (fs.existsSync( changeext(filepath, "webp") )) {
+			cb(); return;
+		}
 
     function w(width) {
       return new Promise((resolve, reject) => {
@@ -49,7 +49,7 @@ exports.default = function chomimgop() {
         let base_ok = false;
 
         gm(filepath)
-          .quality(60)
+          .quality(75)
           .resize(width, null, ">")
           .write(changeext(namesuffix(filepath, suffix), "webp"), err => {
             if (err) {
@@ -85,31 +85,62 @@ exports.default = function chomimgop() {
               }
             });
         } else if (ext.toLowerCase() === "png") {
-          exec(
-            "pngquant " + filepath + " -f -o " + namesuffix(filepath, suffix),
-            (err, stdout, stderr) => {
+          gm(filepath)
+            .quality(85)
+            .resize(width, null, ">")
+						.write(namesuffix(filepath, suffix), err => {
               if (err) {
-                console.log("PNGQuant error", err);
+                console.log(namesuffix(filepath, suffix) + " Error!");
+                console.log(err);
                 reject(err);
-                return;
-              }
-
-              // the *entire* stdout and stderr (buffered)
-              if (stdout.trim() || stderr.trim()) {
-                console.log(`PNGQuant stdout: ${stdout}`);
-                console.log(`PNGQuant stderr: ${stderr}`);
-                if (stderr) reject(stderr); else reject(stdout);
               } else {
                 console.log(namesuffix(filepath, suffix) + " Success!");
-                
+
                 base_ok = true;
-                if (webp_ok && base_ok) resolve();
+                if (webp_ok && base_ok) {
+									resolve();
+								}
               }
-            }
-          );
+            });
+
         }
       });
     }
+		
+		function w2(width) {
+      return new Promise((resolve, reject) => {
+        var ext = fileext(filepath);
+        var suffix = width ? "-" + width + "w" : "";
+
+        if (!width) width = 1920;
+				
+				if (ext.toLowerCase() === "png") {
+					exec(
+						"pngquant " + namesuffix(filepath, suffix) + " -f -o " + namesuffix(filepath, suffix),
+						(err, stdout, stderr) => {
+							if (err) {
+								console.log("PNGQuant error", err);
+								reject(err);
+								return;
+							}
+
+							// the *entire* stdout and stderr (buffered)
+							if (stdout.trim() || stderr.trim()) {
+								console.log(`PNGQuant stdout: ${stdout}`);
+								console.log(`PNGQuant stderr: ${stderr}`);
+								if (stderr) reject(stderr); else reject(stdout);
+							} else {
+								console.log(namesuffix(filepath, suffix) + " Success!");
+								
+								resolve();
+							}
+						}
+					);
+				} else {
+					resolve();
+				}					
+			});
+		}
 
     await w();
     await w(1920);
@@ -120,6 +151,16 @@ exports.default = function chomimgop() {
     await w(360);
     await w(240);
     await w(196);
+		
+    await w2();
+    await w2(1920);
+    await w2(1600);
+    await w2(1280);
+    await w2(768);
+    await w2(480);
+    await w2(360);
+    await w2(240);
+    await w2(196);
 
     cb();
   });
